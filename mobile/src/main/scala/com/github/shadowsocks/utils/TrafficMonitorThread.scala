@@ -91,7 +91,6 @@ class TrafficMonitorThread(context: Context) extends Thread {
           } catch {
             case e: Exception =>
               Log.e(TAG, "Error when recv traffic stat", e)
-              app.track(e)
           }
 
           // close socket
@@ -105,7 +104,6 @@ class TrafficMonitorThread(context: Context) extends Thread {
       } catch {
         case e: IOException =>
           Log.e(TAG, "Error when accept socket", e)
-          app.track(e)
           return
       }
     }

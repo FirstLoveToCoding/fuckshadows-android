@@ -36,7 +36,6 @@ object Typefaces {
         } catch {
           case e: Exception =>
             Log.e("Typefaces", "Could not get typeface '" + assetPath + "' because " + e.getMessage)
-            app.track(e)
             return null
         }
       }

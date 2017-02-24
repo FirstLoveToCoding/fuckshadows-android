@@ -130,7 +130,6 @@ object Utils {
   } catch {
     case ex: Exception =>
       Log.e(TAG, "Failed to get interfaces' addresses.", ex)
-      app.track(ex)
       false
   }
 
@@ -147,7 +146,6 @@ object Utils {
   private val handleFailure: Try[_] => Unit = {
     case Failure(e) =>
       e.printStackTrace()
-      app.track(e)
     case _ =>
   }
 

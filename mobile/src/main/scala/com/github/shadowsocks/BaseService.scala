@@ -179,8 +179,6 @@ trait BaseService extends Service {
       closeReceiverRegistered = true
     }
 
-    app.track(getClass.getSimpleName, "start")
-
     changeState(State.CONNECTING)
 
     Utils.ThrowableFuture(try connect() catch {
@@ -189,7 +187,6 @@ trait BaseService extends Service {
       case exc: Throwable =>
         stopRunner(stopService = true, getString(R.string.service_failed) + ": " + exc.getMessage)
         exc.printStackTrace()
-        app.track(exc)
     })
   }
 

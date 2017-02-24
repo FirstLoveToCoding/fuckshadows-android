@@ -38,7 +38,6 @@ import com.github.shadowsocks.acl.DonaldTrump
 import com.github.shadowsocks.database.{DBHelper, Profile, ProfileManager}
 import com.github.shadowsocks.utils.CloseUtils._
 import com.github.shadowsocks.utils._
-import com.google.android.gms.analytics.{GoogleAnalytics, HitBuilders, StandardExceptionParser, Tracker}
 import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.tagmanager.{ContainerHolder, TagManager}
 import com.j256.ormlite.logger.LocalLog
@@ -63,23 +62,12 @@ class ShadowsocksApplication extends Application {
 
   final val SIG_FUNC = "getSignature"
   var containerHolder: ContainerHolder = _
-  lazy val tracker: Tracker = GoogleAnalytics.getInstance(this).newTracker(R.xml.tracker)
   lazy val settings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
   lazy val editor: SharedPreferences.Editor = settings.edit
   lazy val profileManager = new ProfileManager(new DBHelper(this))
 
   def isNatEnabled: Boolean = settings.getBoolean(Key.isNAT, false)
   def isVpnEnabled: Boolean = !isNatEnabled
-
-  // send event
-  def track(category: String, action: String): Unit = tracker.send(new HitBuilders.EventBuilder()
-    .setAction(action)
-    .setLabel(BuildConfig.VERSION_NAME)
-    .build())
-  def track(t: Throwable): Unit = tracker.send(new HitBuilders.ExceptionBuilder()
-    .setDescription(new StandardExceptionParser(this, null).getDescription(Thread.currentThread.getName, t))
-    .setFatal(false)
-    .build())
 
   def profileId: Int = settings.getInt(Key.id, 0)
   def profileId(i: Int): Unit = editor.putInt(Key.id, i).apply()
@@ -201,7 +189,6 @@ class ShadowsocksApplication extends Application {
     try files = assetManager.list("acl") catch {
       case e: IOException =>
         Log.e(TAG, e.getMessage)
-        app.track(e)
     }
     if (files != null) for (file <- files) autoClose(assetManager.open("acl/" + file))(in =>
       autoClose(new FileOutputStream(new File(getFilesDir, file)))(out =>

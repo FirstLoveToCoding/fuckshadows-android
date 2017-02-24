@@ -68,7 +68,6 @@ class ShadowsocksVpnThread(service: ShadowsocksVpnService) extends Thread {
     } catch {
       case e: IOException =>
         Log.e(TAG, "unable to bind", e)
-        app.track(e)
         return
     }
 
@@ -107,7 +106,6 @@ class ShadowsocksVpnThread(service: ShadowsocksVpnService) extends Thread {
           } catch {
             case e: Exception =>
               Log.e(TAG, "Error when protect socket", e)
-              app.track(e)
           }
 
           // close socket
@@ -121,7 +119,6 @@ class ShadowsocksVpnThread(service: ShadowsocksVpnService) extends Thread {
       } catch {
         case e: IOException =>
           Log.e(TAG, "Error when accept socket", e)
-          app.track(e)
           return
       }
     }

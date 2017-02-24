@@ -134,7 +134,6 @@ class DBHelper(val context: Context)
         }
       } catch {
         case ex: Exception =>
-          app.track(ex)
           recreate(database, connectionSource)
           return
       }

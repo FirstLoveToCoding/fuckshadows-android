@@ -367,7 +367,6 @@ class MainActivity extends Activity with ServiceBoundContext with Drawer.OnDrawe
     drawerItem.getIdentifier match {
       case DRAWER_PROFILES => displayFragment(new ProfilesFragment)
       case DRAWER_RECOVERY =>
-        app.track("GlobalConfigFragment", "reset")
         if (bgService != null) bgService.use(-1)
         val dialog = ProgressDialog.show(this, "", getString(R.string.recovering), true, false)
         val handler = new Handler {
@@ -380,7 +379,6 @@ class MainActivity extends Activity with ServiceBoundContext with Drawer.OnDrawe
         }
       case DRAWER_GLOBAL_SETTINGS => displayFragment(new GlobalSettingsFragment)
       case DRAWER_ABOUT =>
-        app.track(TAG, "about")
         displayFragment(new AboutFragment)
       case DRAWER_FAQ => launchUrl(getString(R.string.faq_url))
       case DRAWER_CUSTOM_RULES => displayFragment(new CustomRulesFragment)
