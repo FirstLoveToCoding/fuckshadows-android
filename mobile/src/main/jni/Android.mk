@@ -27,52 +27,140 @@ include $(CLEAR_VARS)
 SODIUM_SOURCE := \
 	crypto_aead/chacha20poly1305/sodium/aead_chacha20poly1305.c \
 	crypto_aead/xchacha20poly1305/sodium/aead_xchacha20poly1305.c \
+	crypto_auth/crypto_auth.c \
+	crypto_auth/hmacsha256/auth_hmacsha256.c \
+	crypto_auth/hmacsha512/auth_hmacsha512.c \
+	crypto_auth/hmacsha512256/auth_hmacsha512256.c \
+	crypto_box/crypto_box.c \
+	crypto_box/crypto_box_easy.c \
+	crypto_box/crypto_box_seal.c \
+	crypto_box/curve25519xsalsa20poly1305/box_curve25519xsalsa20poly1305.c \
+	crypto_core/curve25519/ref10/curve25519_ref10.c \
 	crypto_core/hchacha20/core_hchacha20.c \
+	crypto_core/hsalsa20/ref2/core_hsalsa20_ref2.c \
+	crypto_core/hsalsa20/core_hsalsa20.c \
 	crypto_core/salsa/ref/core_salsa_ref.c \
+	crypto_generichash/crypto_generichash.c \
+	crypto_generichash/blake2b/generichash_blake2.c \
 	crypto_generichash/blake2b/ref/blake2b-compress-ref.c \
 	crypto_generichash/blake2b/ref/blake2b-ref.c \
 	crypto_generichash/blake2b/ref/generichash_blake2b.c \
+	crypto_hash/crypto_hash.c \
+	crypto_hash/sha256/hash_sha256.c \
+	crypto_hash/sha256/cp/hash_sha256_cp.c \
+	crypto_hash/sha512/hash_sha512.c \
+	crypto_hash/sha512/cp/hash_sha512_cp.c \
+	crypto_kdf/blake2b/kdf_blake2b.c \
+	crypto_kdf/crypto_kdf.c \
+	crypto_kx/crypto_kx.c \
+	crypto_onetimeauth/crypto_onetimeauth.c \
 	crypto_onetimeauth/poly1305/onetimeauth_poly1305.c \
 	crypto_onetimeauth/poly1305/donna/poly1305_donna.c \
-	crypto_pwhash/crypto_pwhash.c \
 	crypto_pwhash/argon2/argon2-core.c \
-	crypto_pwhash/argon2/argon2.c \
 	crypto_pwhash/argon2/argon2-encoding.c \
 	crypto_pwhash/argon2/argon2-fill-block-ref.c \
+	crypto_pwhash/argon2/argon2.c \
 	crypto_pwhash/argon2/blake2b-long.c \
 	crypto_pwhash/argon2/pwhash_argon2i.c \
+	crypto_pwhash/crypto_pwhash.c \
+	crypto_pwhash/scryptsalsa208sha256/crypto_scrypt-common.c \
+	crypto_pwhash/scryptsalsa208sha256/scrypt_platform.c \
+	crypto_pwhash/scryptsalsa208sha256/pbkdf2-sha256.c \
+	crypto_pwhash/scryptsalsa208sha256/pwhash_scryptsalsa208sha256.c \
+	crypto_pwhash/scryptsalsa208sha256/nosse/pwhash_scryptsalsa208sha256_nosse.c \
+	crypto_scalarmult/crypto_scalarmult.c \
 	crypto_scalarmult/curve25519/scalarmult_curve25519.c \
+	crypto_secretbox/crypto_secretbox.c \
+	crypto_secretbox/crypto_secretbox_easy.c \
+	crypto_secretbox/xsalsa20poly1305/secretbox_xsalsa20poly1305.c \
+	crypto_shorthash/crypto_shorthash.c \
+	crypto_shorthash/siphash24/shorthash_siphash24.c \
+	crypto_shorthash/siphash24/ref/shorthash_siphash24_ref.c \
+	crypto_sign/crypto_sign.c \
+	crypto_sign/ed25519/sign_ed25519.c \
+	crypto_sign/ed25519/ref10/keypair.c \
+	crypto_sign/ed25519/ref10/open.c \
+	crypto_sign/ed25519/ref10/sign.c \
 	crypto_stream/chacha20/stream_chacha20.c \
 	crypto_stream/chacha20/ref/chacha20_ref.c \
+	crypto_stream/crypto_stream.c \
 	crypto_stream/salsa20/stream_salsa20.c \
-	crypto_stream/salsa20/ref/salsa20_ref.c \
+	crypto_stream/xsalsa20/stream_xsalsa20.c \
 	crypto_verify/sodium/verify.c \
 	randombytes/randombytes.c \
-	randombytes/sysrandom/randombytes_sysrandom.c \
 	sodium/core.c \
 	sodium/runtime.c \
 	sodium/utils.c \
-	sodium/version.c
+	sodium/version.c \
+	randombytes/salsa20/randombytes_salsa20_random.c \
+	randombytes/sysrandom/randombytes_sysrandom.c \
+	crypto_scalarmult/curve25519/ref10/x25519_ref10.c \
+	crypto_stream/salsa20/ref/salsa20_ref.c \
+	crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305.c \
+	crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305.c \
+	crypto_shorthash/siphash24/shorthash_siphashx24.c \
+	crypto_shorthash/siphash24/ref/shorthash_siphashx24_ref.c \
+	crypto_sign/ed25519/ref10/obsolete.c \
+	crypto_stream/aes128ctr/nacl/afternm_aes128ctr.c \
+	crypto_stream/aes128ctr/nacl/beforenm_aes128ctr.c \
+	crypto_stream/aes128ctr/nacl/consts_aes128ctr.c \
+	crypto_stream/aes128ctr/nacl/int128_aes128ctr.c \
+	crypto_stream/aes128ctr/nacl/stream_aes128ctr_nacl.c \
+	crypto_stream/aes128ctr/nacl/xor_afternm_aes128ctr.c \
+	crypto_stream/aes128ctr/stream_aes128ctr.c \
+	crypto_stream/salsa2012/ref/stream_salsa2012_ref.c \
+	crypto_stream/salsa2012/stream_salsa2012.c \
+	crypto_stream/salsa208/ref/stream_salsa208_ref.c \
+	crypto_stream/salsa208/stream_salsa208.c \
+	crypto_stream/xchacha20/stream_xchacha20.c
 
 LOCAL_MODULE := sodium
-LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/libsodium/src/libsodium/include \
+LOCAL_CFLAGS += -Os -I$(LOCAL_PATH)/libsodium/src/libsodium/include \
 				-I$(LOCAL_PATH)/include \
 				-I$(LOCAL_PATH)/include/sodium \
 				-I$(LOCAL_PATH)/libsodium/src/libsodium/include/sodium \
 				-DPACKAGE_NAME=\"libsodium\" -DPACKAGE_TARNAME=\"libsodium\" \
-				-DPACKAGE_VERSION=\"1.0.7\" -DPACKAGE_STRING=\"libsodium\ 1.0.7\" \
+				-DPACKAGE_VERSION=\"1.0.11\" -DPACKAGE_STRING=\"libsodium\ 1.0.11\" \
 				-DPACKAGE_BUGREPORT=\"https://github.com/jedisct1/libsodium/issues\" \
 				-DPACKAGE_URL=\"https://github.com/jedisct1/libsodium\" \
-				-DPACKAGE=\"libsodium\" -DVERSION=\"1.0.7\" -DSTDC_HEADERS=1 \
-				-DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 \
-				-DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 \
-				-DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 \
-				-D__EXTENSIONS__=1 -D_ALL_SOURCE=1 -D_GNU_SOURCE=1 \
-				-D_POSIX_PTHREAD_SEMANTICS=1 -D_TANDEM_SOURCE=1 \
-				-DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" \
-				-DHAVE_SYS_MMAN_H=1 -DNATIVE_LITTLE_ENDIAN=1 \
-				-DHAVE_WEAK_SYMBOLS=1 -DHAVE_ARC4RANDOM=1 -DHAVE_ARC4RANDOM_BUF=1 \
-				-DHAVE_MLOCK=1 -DHAVE_MPROTECT=1 -DHAVE_POSIX_MEMALIGN=1
+				-DPACKAGE=\"libsodium\" -DVERSION=\"1.0.11\" \
+				-DHAVE_PTHREAD=1                  \
+				-DSTDC_HEADERS=1                  \
+				-DHAVE_SYS_TYPES_H=1              \
+				-DHAVE_SYS_STAT_H=1               \
+				-DHAVE_STDLIB_H=1                 \
+				-DHAVE_STRING_H=1                 \
+				-DHAVE_MEMORY_H=1                 \
+				-DHAVE_STRINGS_H=1                \
+				-DHAVE_INTTYPES_H=1               \
+				-DHAVE_STDINT_H=1                 \
+				-DHAVE_UNISTD_H=1                 \
+				-D__EXTENSIONS__=1                \
+				-D_ALL_SOURCE=1                   \
+				-D_GNU_SOURCE=1                   \
+				-D_POSIX_PTHREAD_SEMANTICS=1      \
+				-D_TANDEM_SOURCE=1                \
+				-DHAVE_DLFCN_H=1                  \
+				-DLT_OBJDIR=\".libs/\"            \
+				-DHAVE_SYS_MMAN_H=1               \
+				-DNATIVE_LITTLE_ENDIAN=1          \
+				-DASM_HIDE_SYMBOL=.hidden         \
+				-DHAVE_WEAK_SYMBOLS=1             \
+				-DHAVE_ARC4RANDOM=1               \
+				-DHAVE_ARC4RANDOM_BUF=1           \
+				-DHAVE_MMAP=1                     \
+				-DHAVE_MLOCK=1                    \
+				-DHAVE_MADVISE=1                  \
+				-DHAVE_MPROTECT=1                 \
+				-DHAVE_NANOSLEEP=1                \
+				-DHAVE_POSIX_MEMALIGN=1           \
+				-DHAVE_GETPID=1
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 
 LOCAL_SRC_FILES := $(addprefix libsodium/src/libsodium/,$(SODIUM_SOURCE))
 
@@ -85,22 +173,47 @@ include $(BUILD_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
 LIBEVENT_SOURCES := \
-	buffer.c \
-	bufferevent.c bufferevent_filter.c \
-	bufferevent_pair.c bufferevent_ratelim.c \
-	bufferevent_sock.c epoll.c \
-	epoll_sub.c evdns.c event.c \
-    event_tagging.c evmap.c \
-	evrpc.c evthread.c \
-	evthread_pthread.c evutil.c \
-	evutil_rand.c http.c \
-	listener.c log.c poll.c \
-	select.c signal.c strlcpy.c
+	buffer.c				\
+	bufferevent.c				\
+	bufferevent_filter.c			\
+	bufferevent_pair.c			\
+	bufferevent_ratelim.c			\
+	bufferevent_sock.c			\
+	event.c					\
+	evmap.c					\
+	evthread.c				\
+	evutil.c				\
+	evutil_rand.c				\
+	evutil_time.c				\
+	listener.c				\
+	log.c					\
+	strlcpy.c \
+	select.c  \
+	poll.c    \
+	devpoll.c \
+	kqueue.c  \
+	epoll.c   \
+	evport.c  \
+	signal.c  \
+	evdns.c					\
+	event_tagging.c				\
+	evrpc.c					\
+	http.c					\
+	epoll_sub.c
 
 LOCAL_MODULE := event
 LOCAL_SRC_FILES := $(addprefix libevent/, $(LIBEVENT_SOURCES))
-LOCAL_CFLAGS := -O2 -D_EVENT_HAVE_ARC4RANDOM -I$(LOCAL_PATH)/libevent \
+LOCAL_CFLAGS += -Os \
+	-I$(LOCAL_PATH)/libevent/compat \
 	-I$(LOCAL_PATH)/libevent/include \
+	-I$(LOCAL_PATH)/libevent
+
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -113,25 +226,9 @@ include $(CLEAR_VARS)
 ANCILLARY_SOURCE := fd_recv.c fd_send.c
 
 LOCAL_MODULE := libancillary
-LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/libancillary
+LOCAL_CFLAGS += -Os -I$(LOCAL_PATH)/libancillary
 
 LOCAL_SRC_FILES := $(addprefix libancillary/, $(ANCILLARY_SOURCE))
-
-include $(BUILD_STATIC_LIBRARY)
-
-########################################################
-## libbloom
-########################################################
-
-include $(CLEAR_VARS)
-
-BLOOM_SOURCE := bloom.c murmur2/MurmurHash2.c
-
-LOCAL_MODULE := libbloom
-LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/shadowsocks-libev/libbloom \
-				-I$(LOCAL_PATH)/shadowsocks-libev/libbloom/murmur2
-
-LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/libbloom/, $(BLOOM_SOURCE))
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -151,10 +248,17 @@ set_src = set/allocation.c set/inspection.c set/ipv4_set.c set/ipv6_set.c \
 IPSET_SOURCE := general.c $(bdd_src) $(map_src) $(set_src)
 
 LOCAL_MODULE := libipset
-LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/shadowsocks-libev/libipset/include \
+LOCAL_CFLAGS += -Os -I$(LOCAL_PATH)/shadowsocks-libev/libipset/include \
 				-I$(LOCAL_PATH)/shadowsocks-libev/libcork/include
 
-LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/libipset/src/libipset/,$(IPSET_SOURCE))
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
+
+LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/libipset/,$(IPSET_SOURCE))
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -178,25 +282,111 @@ pthreads_src := pthreads/thread.c
 CORK_SOURCE := $(cli_src) $(core_src) $(ds_src) $(posix_src) $(pthreads_src)
 
 LOCAL_MODULE := libcork
-LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/shadowsocks-libev/libcork/include \
+LOCAL_CFLAGS += -Os -I$(LOCAL_PATH)/shadowsocks-libev/libcork/include \
 				-DCORK_API=CORK_LOCAL
 
-LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/libcork/src/libcork/,$(CORK_SOURCE))
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
+
+LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/libcork/,$(CORK_SOURCE))
 
 include $(BUILD_STATIC_LIBRARY)
 
 ########################################################
-## libev
+## libcares
+########################################################
+
+include $(CLEAR_VARS)
+
+CARES_SOURCES := ares__close_sockets.c	\
+  ares__get_hostent.c			\
+  ares__read_line.c			\
+  ares__timeval.c			\
+  ares_cancel.c				\
+  ares_data.c				\
+  ares_destroy.c			\
+  ares_expand_name.c			\
+  ares_expand_string.c			\
+  ares_fds.c				\
+  ares_free_hostent.c			\
+  ares_free_string.c			\
+  ares_getenv.c				\
+  ares_gethostbyaddr.c			\
+  ares_gethostbyname.c			\
+  ares_getnameinfo.c			\
+  ares_getsock.c			\
+  ares_init.c				\
+  ares_library_init.c			\
+  ares_llist.c				\
+  ares_mkquery.c			\
+  ares_create_query.c			\
+  ares_nowarn.c				\
+  ares_options.c			\
+  ares_parse_a_reply.c			\
+  ares_parse_aaaa_reply.c		\
+  ares_parse_mx_reply.c			\
+  ares_parse_naptr_reply.c		\
+  ares_parse_ns_reply.c			\
+  ares_parse_ptr_reply.c		\
+  ares_parse_soa_reply.c		\
+  ares_parse_srv_reply.c		\
+  ares_parse_txt_reply.c		\
+  ares_platform.c			\
+  ares_process.c			\
+  ares_query.c				\
+  ares_search.c				\
+  ares_send.c				\
+  ares_strcasecmp.c			\
+  ares_strdup.c				\
+  ares_strerror.c			\
+  ares_timeout.c			\
+  ares_version.c			\
+  ares_writev.c				\
+  bitncmp.c				\
+  inet_net_pton.c			\
+  inet_ntop.c				\
+  windows_port.c
+
+LOCAL_MODULE := libcares
+LOCAL_CFLAGS += -Os -I$(LOCAL_PATH)/shadowsocks-libev/libcares \
+	-I$(LOCAL_PATH)/include/libcares \
+	-DCARES_BUILDING_LIBRARY -DCARES_STATICLIB \
+	-DHAVE_CONFIG_H
+
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
+
+LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/libcares/,$(CARES_SOURCES))
+
+include $(BUILD_STATIC_LIBRARY)
+
+########################################################
+## libev 
 ########################################################
 
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libev
-LOCAL_CFLAGS += -O2 -DNDEBUG -DHAVE_CONFIG_H \
+LOCAL_CFLAGS += -Os -DNDEBUG -DHAVE_CONFIG_H \
 				-I$(LOCAL_PATH)/include/libev
 LOCAL_SRC_FILES := \
-	libev/ev.c \
-	libev/event.c
+	shadowsocks-libev/libev/ev.c \
+	shadowsocks-libev/libev/event.c
+
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -215,10 +405,17 @@ LOCAL_STATIC_LIBRARIES := libevent
 
 LOCAL_MODULE := redsocks
 LOCAL_SRC_FILES := $(addprefix redsocks/, $(REDSOCKS_SOURCES)) 
-LOCAL_CFLAGS := -O2 -std=gnu99 -DUSE_IPTABLES \
+LOCAL_CFLAGS += -Os -std=gnu99 -DUSE_IPTABLES \
 	-I$(LOCAL_PATH)/redsocks \
 	-I$(LOCAL_PATH)/libevent/include \
 	-I$(LOCAL_PATH)/libevent
+
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 
 include $(BUILD_SHARED_EXECUTABLE)
 
@@ -231,28 +428,38 @@ include $(CLEAR_VARS)
 SHADOWSOCKS_SOURCES := local.c \
 	cache.c udprelay.c utils.c netutils.c json.c jconf.c \
 	acl.c http.c tls.c rule.c \
-	crypto.c aead.c stream.c base64.c \
-	plugin.c ppbloom.c \
+	crypto.c aead.c stream.c \
+	sbf.c \
 	android.c
 
 LOCAL_MODULE    := ss-local
 LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/src/, $(SHADOWSOCKS_SOURCES))
-LOCAL_CFLAGS    := -Wall -O2 -fno-strict-aliasing -DMODULE_LOCAL \
+LOCAL_CFLAGS    += -Wall -Os -fno-strict-aliasing -DMODULE_LOCAL \
 					-DUSE_CRYPTO_MBEDTLS -DHAVE_CONFIG_H \
 					-DCONNECT_IN_PROGRESS=EINPROGRESS \
+					-DHAVE_POSIX_MEMALIGN=1 \
+					-DHAVE_LINUX_RANDOM_H=1 \
 					-I$(LOCAL_PATH)/include/shadowsocks-libev \
+					-I$(LOCAL_PATH)/include/libcares \
 					-I$(LOCAL_PATH)/include \
 					-I$(LOCAL_PATH)/libancillary \
 					-I$(LOCAL_PATH)/mbedtls/include  \
 					-I$(LOCAL_PATH)/pcre \
+					-I$(LOCAL_PATH)/shadowsocks-libev/libcares \
 					-I$(LOCAL_PATH)/libsodium/src/libsodium/include \
 					-I$(LOCAL_PATH)/libsodium/src/libsodium/include/sodium \
 					-I$(LOCAL_PATH)/shadowsocks-libev/libcork/include \
 					-I$(LOCAL_PATH)/shadowsocks-libev/libipset/include \
-					-I$(LOCAL_PATH)/shadowsocks-libev/libbloom \
 					-I$(LOCAL_PATH)/libev
 
-LOCAL_STATIC_LIBRARIES := libev libmbedtls libipset libcork libbloom \
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
+
+LOCAL_STATIC_LIBRARIES := libev libmbedtls libipset libcork libcares \
 	libsodium libancillary libpcre
 
 LOCAL_LDLIBS := -llog
@@ -267,26 +474,36 @@ include $(CLEAR_VARS)
 
 SHADOWSOCKS_SOURCES := tunnel.c \
 	cache.c udprelay.c utils.c netutils.c json.c jconf.c \
-	crypto.c aead.c stream.c base64.c \
-	plugin.c ppbloom.c \
+	crypto.c aead.c stream.c \
+	sbf.c \
 	android.c
 
 LOCAL_MODULE    := ss-tunnel
 LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/src/, $(SHADOWSOCKS_SOURCES))
-LOCAL_CFLAGS    := -Wall -O2 -fno-strict-aliasing -DMODULE_TUNNEL \
+LOCAL_CFLAGS    += -Wall -Os -fno-strict-aliasing -DMODULE_TUNNEL \
 					-DUSE_CRYPTO_MBEDTLS -DHAVE_CONFIG_H -DSSTUNNEL_JNI \
 					-DCONNECT_IN_PROGRESS=EINPROGRESS \
+					-DHAVE_POSIX_MEMALIGN=1 \
+					-DHAVE_LINUX_RANDOM_H=1 \
 					-I$(LOCAL_PATH)/libancillary \
 					-I$(LOCAL_PATH)/include \
+					-I$(LOCAL_PATH)/shadowsocks-libev/libcares \
 					-I$(LOCAL_PATH)/libsodium/src/libsodium/include \
 					-I$(LOCAL_PATH)/libsodium/src/libsodium/include/sodium \
 					-I$(LOCAL_PATH)/mbedtls/include \
 					-I$(LOCAL_PATH)/libev \
 					-I$(LOCAL_PATH)/shadowsocks-libev/libcork/include \
-					-I$(LOCAL_PATH)/shadowsocks-libev/libbloom \
-					-I$(LOCAL_PATH)/include/shadowsocks-libev
+					-I$(LOCAL_PATH)/include/shadowsocks-libev \
+					-I$(LOCAL_PATH)/include/libcares
 
-LOCAL_STATIC_LIBRARIES := libev libmbedtls libsodium libcork libbloom libancillary
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
+
+LOCAL_STATIC_LIBRARIES := libev libmbedtls libsodium libcork libcares libancillary
 
 LOCAL_LDLIBS := -llog
 
@@ -304,9 +521,18 @@ LOCAL_C_INCLUDES:= $(LOCAL_PATH)/libancillary
 
 LOCAL_SRC_FILES:= jni-helper.cpp
 
+LOCAL_CFLAGS := -Os
+
 LOCAL_LDLIBS := -ldl -llog
 
 LOCAL_STATIC_LIBRARIES := cpufeatures libancillary
+
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -316,11 +542,12 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_CFLAGS := -std=gnu99
-LOCAL_CFLAGS += -DBADVPN_THREADWORK_USE_PTHREAD -DBADVPN_LINUX -DBADVPN_BREACTOR_BADVPN -D_GNU_SOURCE
+LOCAL_CFLAGS := -Os -std=gnu99
+LOCAL_CFLAGS += -DBADVPN_THREADWORK_USE_PTHREAD -DBADVPN_THREAD_SAFE=1 -DBADVPN_LINUX -DBADVPN_BREACTOR_BADVPN -D_GNU_SOURCE
 LOCAL_CFLAGS += -DBADVPN_USE_SIGNALFD -DBADVPN_USE_EPOLL
-LOCAL_CFLAGS += -DBADVPN_LITTLE_ENDIAN -DBADVPN_THREAD_SAFE
+LOCAL_CFLAGS += -DBADVPN_LITTLE_ENDIAN
 LOCAL_CFLAGS += -DNDEBUG -DANDROID
+LOCAL_CFLAGS += -Wno-parentheses -Wno-gnu-designator
 # LOCAL_CFLAGS += -DTUN2SOCKS_JNI
 
 LOCAL_STATIC_LIBRARIES := libancillary
@@ -334,70 +561,85 @@ LOCAL_C_INCLUDES:= \
         $(LOCAL_PATH)/badvpn/
 
 TUN2SOCKS_SOURCES := \
-        base/BLog_syslog.c \
-        system/BReactor_badvpn.c \
-        system/BSignal.c \
-        system/BConnection_common.c \
-        system/BConnection_unix.c \
-        system/BTime.c \
-        system/BUnixSignal.c \
-        system/BNetwork.c \
-        flow/StreamRecvInterface.c \
-        flow/PacketRecvInterface.c \
-        flow/PacketPassInterface.c \
-        flow/StreamPassInterface.c \
-        flow/SinglePacketBuffer.c \
-        flow/BufferWriter.c \
-        flow/PacketBuffer.c \
-        flow/PacketStreamSender.c \
-        flow/PacketPassConnector.c \
-        flow/PacketProtoFlow.c \
-        flow/PacketPassFairQueue.c \
-        flow/PacketProtoEncoder.c \
-        flow/PacketProtoDecoder.c \
-        socksclient/BSocksClient.c \
-        tuntap/BTap.c \
-        lwip/src/core/timers.c \
-        lwip/src/core/udp.c \
-        lwip/src/core/memp.c \
-        lwip/src/core/init.c \
-        lwip/src/core/pbuf.c \
-        lwip/src/core/tcp.c \
-        lwip/src/core/tcp_out.c \
-        lwip/src/core/netif.c \
-        lwip/src/core/def.c \
-        lwip/src/core/mem.c \
-        lwip/src/core/tcp_in.c \
-        lwip/src/core/stats.c \
-        lwip/src/core/inet_chksum.c \
-        lwip/src/core/ipv4/icmp.c \
-        lwip/src/core/ipv4/igmp.c \
-        lwip/src/core/ipv4/ip4_addr.c \
-        lwip/src/core/ipv4/ip_frag.c \
-        lwip/src/core/ipv4/ip4.c \
-        lwip/src/core/ipv4/autoip.c \
-        lwip/src/core/ipv6/ethip6.c \
-        lwip/src/core/ipv6/inet6.c \
-        lwip/src/core/ipv6/ip6_addr.c \
-        lwip/src/core/ipv6/mld6.c \
-        lwip/src/core/ipv6/dhcp6.c \
-        lwip/src/core/ipv6/icmp6.c \
-        lwip/src/core/ipv6/ip6.c \
-        lwip/src/core/ipv6/ip6_frag.c \
-        lwip/src/core/ipv6/nd6.c \
-        lwip/custom/sys.c \
-        tun2socks/tun2socks.c \
-        base/DebugObject.c \
-        base/BLog.c \
-        base/BPending.c \
-		system/BDatagram_unix.c \
-        flowextra/PacketPassInactivityMonitor.c \
-        tun2socks/SocksUdpGwClient.c \
-        udpgw_client/UdpGwClient.c
+	base/BLog_syslog.c                        \
+	system/BReactor_badvpn.c                  \
+	system/BSignal.c                          \
+	system/BConnection_unix.c                 \
+	system/BConnection_common.c               \
+	system/BTime.c                            \
+	system/BUnixSignal.c                      \
+	system/BNetwork.c                         \
+	system/BDatagram_unix.c                   \
+	flow/StreamRecvInterface.c                \
+	flow/PacketRecvInterface.c                \
+	flow/PacketPassInterface.c                \
+	flow/StreamPassInterface.c                \
+	flow/SinglePacketBuffer.c                 \
+	flow/BufferWriter.c                       \
+	flow/PacketBuffer.c                       \
+	flow/PacketStreamSender.c                 \
+	flow/PacketPassConnector.c                \
+	flow/PacketProtoFlow.c                    \
+	flow/PacketPassFairQueue.c                \
+	flow/PacketProtoEncoder.c                 \
+	flow/PacketProtoDecoder.c                 \
+	socksclient/BSocksClient.c                \
+	tuntap/BTap.c                             \
+	lwip/src/core/init.c \
+	lwip/src/core/def.c \
+	lwip/src/core/dns.c \
+	lwip/src/core/inet_chksum.c \
+	lwip/src/core/ip.c \
+	lwip/src/core/mem.c \
+	lwip/src/core/memp.c \
+	lwip/src/core/netif.c \
+	lwip/src/core/pbuf.c \
+	lwip/src/core/raw.c \
+	lwip/src/core/stats.c \
+	lwip/src/core/sys.c \
+	lwip/src/core/altcp.c \
+	lwip/src/core/altcp_tcp.c \
+	lwip/src/core/tcp.c \
+	lwip/src/core/tcp_in.c \
+	lwip/src/core/tcp_out.c \
+	lwip/src/core/timeouts.c \
+	lwip/src/core/udp.c \
+	lwip/src/core/ipv4/autoip.c \
+	lwip/src/core/ipv4/dhcp.c \
+	lwip/src/core/ipv4/etharp.c \
+	lwip/src/core/ipv4/icmp.c \
+	lwip/src/core/ipv4/igmp.c \
+	lwip/src/core/ipv4/ip4_frag.c \
+	lwip/src/core/ipv4/ip4.c \
+	lwip/src/core/ipv4/ip4_addr.c \
+	lwip/src/core/ipv6/dhcp6.c \
+	lwip/src/core/ipv6/ethip6.c \
+	lwip/src/core/ipv6/icmp6.c \
+	lwip/src/core/ipv6/inet6.c \
+	lwip/src/core/ipv6/ip6.c \
+	lwip/src/core/ipv6/ip6_addr.c \
+	lwip/src/core/ipv6/ip6_frag.c \
+	lwip/src/core/ipv6/mld6.c \
+	lwip/src/core/ipv6/nd6.c \
+	lwip/custom/sys.c                         \
+	tun2socks/tun2socks.c                     \
+	base/DebugObject.c                        \
+	base/BLog.c                               \
+	base/BPending.c                           \
+	flowextra/PacketPassInactivityMonitor.c   \
+	tun2socks/SocksUdpGwClient.c              \
+	udpgw_client/UdpGwClient.c
 
 LOCAL_MODULE := tun2socks
 
 LOCAL_LDLIBS := -ldl -llog
+
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 
 LOCAL_SRC_FILES := $(addprefix badvpn/, $(TUN2SOCKS_SOURCES))
 
@@ -417,6 +659,15 @@ MBEDTLS_SOURCES := $(wildcard $(LOCAL_PATH)/mbedtls/library/*.c)
 
 LOCAL_SRC_FILES := $(MBEDTLS_SOURCES:$(LOCAL_PATH)/%=%)
 
+LOCAL_CFLAGS := -Os
+
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
+
 include $(BUILD_STATIC_LIBRARY)
 
 ########################################################
@@ -427,7 +678,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := pcre
 
-LOCAL_CFLAGS += -DHAVE_CONFIG_H
+LOCAL_CFLAGS += -Os -DHAVE_CONFIG_H
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/pcre/dist $(LOCAL_PATH)/pcre
 
@@ -455,6 +706,13 @@ libpcre_src_files := \
     dist/pcre_xclass.c
 
 LOCAL_SRC_FILES := $(addprefix pcre/, $(libpcre_src_files))
+
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 
 include $(BUILD_STATIC_LIBRARY)
 

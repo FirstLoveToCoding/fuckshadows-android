@@ -9,7 +9,7 @@ function try () {
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 MIN_API=$1
 TARGET=$DIR/../main/jni/overture
-DEPS=$DIR/.deps
+DEPS=$DIR/dependencies
 
 ANDROID_ARM_TOOLCHAIN=$DEPS/android-toolchain-${MIN_API}-arm
 ANDROID_ARM64_TOOLCHAIN=$DEPS/android-toolchain-21-arm64
@@ -57,10 +57,11 @@ export GOPATH=$DIR
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 
 echo "Get dependences for overture"
-go get -u github.com/tools/godep
+#go get -u github.com/tools/godep
 
-pushd $GOPATH/src/github.com/shadowsocks/overture/main
-godep restore
+pushd $GOPATH/src/github.com/fuckshadows/overture/main
+#godep save
+go get
 
 echo "Cross compile overture for arm"
 try env CGO_ENABLED=1 CC=$ANDROID_ARM_CC GOOS=android GOARCH=arm GOARM=7 go build -ldflags="-s -w"
