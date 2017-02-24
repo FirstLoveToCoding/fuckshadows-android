@@ -40,7 +40,7 @@
  * In normal operation, you will currently only need IPv4. */
 #define ENABLE_IPV4 1
 #define DEFAULT_IPV4 1
-#undef ENABLE_IPV6 
+#define ENABLE_IPV6 1
 
 /* In all pdnsd versions before 1.0.6, DNS queries were always done over
  * TCP. Now, you have the choice. You can control that behaviour using
@@ -152,11 +152,11 @@
 /* Default TCP timeout when receiving queries */
 #define TCP_TIMEOUT 5
 
-/* Allow subsequent TCP queries on one connection? */
-/* #undef TCP_SUBSEQ */
-
 /* Default value for parallel query number */
 #define PAR_QUERIES   4
+
+/* Maximum number of queries in a tcp connection */
+#define TCP_MAX_QUERY 3
 
 /* Maximum number of IP addresses used per nameserver obtained from NS records. */
 #define MAXNAMESERVIPS 3
@@ -190,7 +190,7 @@
 
 /* pdnsd version. DO NOT TOUCH THIS! It is replaced automatically by the
  * contents of ./version */
-#define VERSION "1.2.9a-par"
+#define VERSION "1.2.9b-par"
 
 #endif
 
@@ -284,9 +284,12 @@
 #define HAVE_STDLIB_H 1
 
 /* Define to 1 if you have the `stpcpy' function. */
-#if defined(__aarch64__) || defined(__x86_64__)
+/* #if defined(__aarch64__) || defined(__x86_64__)
 #define HAVE_STPCPY 1
-#endif
+#endif */
+
+/* android-21 do have this function on NDK r11c */
+#define HAVE_STPCPY 1
 
 /* Define to 1 if you have the `stpncpy' function. */
 //#define HAVE_STPNCPY 1
@@ -357,9 +360,6 @@
 /* Define to 1 if you have the `vsnprintf' function. */
 #define HAVE_VSNPRINTF 1
 
-/* Define to 1 if your C compiler doesn't accept -c and -o together. */
-/* #undef NO_MINUS_C_MINUS_O */
-
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT ""
 
@@ -371,6 +371,9 @@
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME ""
+
+/* Define to the home page for this package. */
+#define PACKAGE_URL ""
 
 /* Define to the version of this package. */
 #define PACKAGE_VERSION ""

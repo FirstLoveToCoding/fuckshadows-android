@@ -41,6 +41,7 @@ object ConfigUtils {
     "redsocks {\n" +
     " local_ip = 127.0.0.1;\n" +
     " local_port = 8123;\n" +
+    " splice = true;\n" +
     " ip = 127.0.0.1;\n" +
     " port = %d;\n" +
     " type = socks5;\n" +
