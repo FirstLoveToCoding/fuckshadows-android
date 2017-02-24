@@ -27,7 +27,7 @@ lazy val commonSettings = Seq(
 
 val supportLibsVersion = "27.0.2"
 val takisoftFixVersion = "27.0.2.0"
-lazy val root = Project(id = "shadowsocks-android", base = file("."))
+lazy val root = Project(id = "fuckshadows-android", base = file("."))
   .settings(commonSettings)
   .aggregate(plugin, mobile)
 
