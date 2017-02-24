@@ -22,7 +22,7 @@ android:
   components:
   - platform-tools
   - tools
-  - build-tools-27.0.0
+  - build-tools-27.0.1
   - android-27
   - extra-google-m2repository
   - extra-android-m2repository
@@ -45,7 +45,7 @@ install:
   fi
 - cp -f mobile/local.properties.wongsyrone mobile/local.properties
 script:
-- "$SBTPATH/sbt clean go-clean go-build android:package-release"
+- "$SBTPATH/sbt go-clean clean go-build android:package-release"
 deploy:
   provider: releases
   api_key:

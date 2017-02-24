@@ -12,7 +12,7 @@ mobile/src/main/libs
 mobile/src/main/obj
 mobile/src/main/jni/overture
 
-mobile/src/overture/.deps
+mobile/src/overture/dependencies
 mobile/src/overture/bin
 mobile/src/overture/pkg
 

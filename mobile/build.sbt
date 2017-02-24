@@ -56,7 +56,7 @@ packagingOptions := PackagingOptions(excludes =
 
 lazy val goClean: TaskKey[Unit] = TaskKey[Unit]("go-clean", "Clean go build dependencies")
 goClean := {
-  IO.delete(baseDirectory(base => base / "src/overture/.deps").value)
+  IO.delete(baseDirectory(base => base / "src/overture/dependencies").value)
   IO.delete(baseDirectory(base => base / "src/overture/bin").value)
   IO.delete(baseDirectory(base => base / "src/overture/go/bin").value)
   IO.delete(baseDirectory(base => base / "src/main/jni/overture").value)
