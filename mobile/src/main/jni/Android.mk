@@ -353,6 +353,7 @@ LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/src/, $(SHADOWSOCKS_SOURCES))
 LOCAL_CFLAGS    := -Wall -O2 -fno-strict-aliasing -DMODULE_LOCAL \
 					-DUSE_CRYPTO_MBEDTLS -DANDROID -DHAVE_CONFIG_H \
 					-DCONNECT_IN_PROGRESS=EINPROGRESS \
+					-DHAVE_POSIX_MEMALIGN=1 \
 					-I$(LOCAL_PATH)/include/shadowsocks-libev \
 					-I$(LOCAL_PATH)/include \
 					-I$(LOCAL_PATH)/libancillary \
@@ -389,6 +390,7 @@ LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/src/, $(SHADOWSOCKS_SOURCES))
 LOCAL_CFLAGS    := -Wall -O2 -fno-strict-aliasing -DMODULE_TUNNEL \
 					-DUSE_CRYPTO_MBEDTLS -DANDROID -DHAVE_CONFIG_H -DSSTUNNEL_JNI \
 					-DCONNECT_IN_PROGRESS=EINPROGRESS \
+					-DHAVE_POSIX_MEMALIGN=1 \
 					-I$(LOCAL_PATH)/libancillary \
 					-I$(LOCAL_PATH)/include \
 					-I$(LOCAL_PATH)/shadowsocks-libev/libudns \
