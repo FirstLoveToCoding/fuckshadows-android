@@ -140,16 +140,38 @@ LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/libsodium/src/libsodium/include \
 				-DPACKAGE_VERSION=\"1.0.11\" -DPACKAGE_STRING=\"libsodium\ 1.0.11\" \
 				-DPACKAGE_BUGREPORT=\"https://github.com/jedisct1/libsodium/issues\" \
 				-DPACKAGE_URL=\"https://github.com/jedisct1/libsodium\" \
-				-DPACKAGE=\"libsodium\" -DVERSION=\"1.0.11\" -DSTDC_HEADERS=1 \
-				-DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 \
-				-DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 \
-				-DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 \
-				-D__EXTENSIONS__=1 -D_ALL_SOURCE=1 -D_GNU_SOURCE=1 \
-				-D_POSIX_PTHREAD_SEMANTICS=1 -D_TANDEM_SOURCE=1 \
-				-DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" \
-				-DHAVE_SYS_MMAN_H=1 -DNATIVE_LITTLE_ENDIAN=1 \
-				-DHAVE_WEAK_SYMBOLS=1 -DHAVE_ARC4RANDOM=1 -DHAVE_ARC4RANDOM_BUF=1 \
-				-DHAVE_MLOCK=1 -DHAVE_MPROTECT=1 -DHAVE_POSIX_MEMALIGN=1
+				-DPACKAGE=\"libsodium\" -DVERSION=\"1.0.11\" \
+				-DHAVE_PTHREAD=1                  \
+				-DSTDC_HEADERS=1                  \
+				-DHAVE_SYS_TYPES_H=1              \
+				-DHAVE_SYS_STAT_H=1               \
+				-DHAVE_STDLIB_H=1                 \
+				-DHAVE_STRING_H=1                 \
+				-DHAVE_MEMORY_H=1                 \
+				-DHAVE_STRINGS_H=1                \
+				-DHAVE_INTTYPES_H=1               \
+				-DHAVE_STDINT_H=1                 \
+				-DHAVE_UNISTD_H=1                 \
+				-D__EXTENSIONS__=1                \
+				-D_ALL_SOURCE=1                   \
+				-D_GNU_SOURCE=1                   \
+				-D_POSIX_PTHREAD_SEMANTICS=1      \
+				-D_TANDEM_SOURCE=1                \
+				-DHAVE_DLFCN_H=1                  \
+				-DLT_OBJDIR=\".libs/\"            \
+				-DHAVE_SYS_MMAN_H=1               \
+				-DNATIVE_LITTLE_ENDIAN=1          \
+				-DASM_HIDE_SYMBOL=.hidden         \
+				-DHAVE_WEAK_SYMBOLS=1             \
+				-DHAVE_ARC4RANDOM=1               \
+				-DHAVE_ARC4RANDOM_BUF=1           \
+				-DHAVE_MMAP=1                     \
+				-DHAVE_MLOCK=1                    \
+				-DHAVE_MADVISE=1                  \
+				-DHAVE_MPROTECT=1                 \
+				-DHAVE_NANOSLEEP=1                \
+				-DHAVE_POSIX_MEMALIGN=1           \
+				-DHAVE_GETPID=1
 
 LOCAL_SRC_FILES := $(addprefix libsodium/src/libsodium/,$(SODIUM_SOURCE))
 
@@ -162,22 +184,39 @@ include $(BUILD_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
 LIBEVENT_SOURCES := \
-	buffer.c \
-	bufferevent.c bufferevent_filter.c \
-	bufferevent_pair.c bufferevent_ratelim.c \
-	bufferevent_sock.c epoll.c \
-	epoll_sub.c evdns.c event.c \
-    event_tagging.c evmap.c \
-	evrpc.c evthread.c \
-	evthread_pthread.c evutil.c \
-	evutil_rand.c http.c \
-	listener.c log.c poll.c \
-	select.c signal.c strlcpy.c
+	buffer.c				\
+	bufferevent.c				\
+	bufferevent_filter.c			\
+	bufferevent_pair.c			\
+	bufferevent_ratelim.c			\
+	bufferevent_sock.c			\
+	event.c					\
+	evmap.c					\
+	evthread.c				\
+	evutil.c				\
+	evutil_rand.c				\
+	evutil_time.c				\
+	listener.c				\
+	log.c					\
+	strlcpy.c \
+	select.c  \
+	poll.c    \
+	devpoll.c \
+	kqueue.c  \
+	epoll.c   \
+	evport.c  \
+	signal.c  \
+	evdns.c					\
+	event_tagging.c				\
+	evrpc.c					\
+	http.c
 
 LOCAL_MODULE := event
 LOCAL_SRC_FILES := $(addprefix libevent/, $(LIBEVENT_SOURCES))
-LOCAL_CFLAGS := -O2 -I$(LOCAL_PATH)/libevent \
+LOCAL_CFLAGS += -O2 \
+	-I$(LOCAL_PATH)/libevent/compat \
 	-I$(LOCAL_PATH)/libevent/include \
+	-I$(LOCAL_PATH)/libevent \
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -310,7 +349,7 @@ LOCAL_STATIC_LIBRARIES := libevent
 
 LOCAL_MODULE := redsocks
 LOCAL_SRC_FILES := $(addprefix redsocks/, $(REDSOCKS_SOURCES)) 
-LOCAL_CFLAGS := -O2 -std=gnu99 -DUSE_IPTABLES \
+LOCAL_CFLAGS += -O2 -std=gnu99 -DUSE_IPTABLES \
 	-I$(LOCAL_PATH)/redsocks \
 	-I$(LOCAL_PATH)/libevent/include \
 	-I$(LOCAL_PATH)/libevent
@@ -327,7 +366,7 @@ PDNSD_SOURCES  := $(wildcard $(LOCAL_PATH)/pdnsd/src/*.c)
 
 LOCAL_MODULE    := pdnsd
 LOCAL_SRC_FILES := $(PDNSD_SOURCES:$(LOCAL_PATH)/%=%)
-LOCAL_CFLAGS    := -DANDROID -Wall -O2 -I$(LOCAL_PATH)/pdnsd \
+LOCAL_CFLAGS    += -DANDROID -Wall -O2 -I$(LOCAL_PATH)/pdnsd \
 				   -I$(LOCAL_PATH)/include/pdnsd -I$(LOCAL_PATH)/libancillary
 LOCAL_CFLAGS += -Wno-parentheses -Wno-gnu-designator
 LOCAL_STATIC_LIBRARIES := libancillary
@@ -350,7 +389,7 @@ SHADOWSOCKS_SOURCES := local.c \
 
 LOCAL_MODULE    := ss-local
 LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/src/, $(SHADOWSOCKS_SOURCES))
-LOCAL_CFLAGS    := -Wall -O2 -fno-strict-aliasing -DMODULE_LOCAL \
+LOCAL_CFLAGS    += -Wall -O2 -fno-strict-aliasing -DMODULE_LOCAL \
 					-DUSE_CRYPTO_MBEDTLS -DANDROID -DHAVE_CONFIG_H \
 					-DCONNECT_IN_PROGRESS=EINPROGRESS \
 					-DHAVE_POSIX_MEMALIGN=1 \
@@ -387,7 +426,7 @@ SHADOWSOCKS_SOURCES := tunnel.c \
 
 LOCAL_MODULE    := ss-tunnel
 LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/src/, $(SHADOWSOCKS_SOURCES))
-LOCAL_CFLAGS    := -Wall -O2 -fno-strict-aliasing -DMODULE_TUNNEL \
+LOCAL_CFLAGS    += -Wall -O2 -fno-strict-aliasing -DMODULE_TUNNEL \
 					-DUSE_CRYPTO_MBEDTLS -DANDROID -DHAVE_CONFIG_H -DSSTUNNEL_JNI \
 					-DCONNECT_IN_PROGRESS=EINPROGRESS \
 					-DHAVE_POSIX_MEMALIGN=1 \
@@ -431,7 +470,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_CFLAGS := -std=gnu99
+LOCAL_CFLAGS += -std=gnu99
 LOCAL_CFLAGS += -DBADVPN_THREADWORK_USE_PTHREAD -DBADVPN_LINUX -DBADVPN_BREACTOR_BADVPN -D_GNU_SOURCE
 LOCAL_CFLAGS += -DBADVPN_USE_SELFPIPE -DBADVPN_USE_EPOLL
 LOCAL_CFLAGS += -DBADVPN_LITTLE_ENDIAN -DBADVPN_THREAD_SAFE

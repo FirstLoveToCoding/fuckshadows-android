@@ -12,8 +12,8 @@
 	branch = shadowsocks-android
 [submodule "mobile/src/main/jni/libevent"]
 	path = mobile/src/main/jni/libevent
-	url = https://github.com/wongsyrone/libevent.git
-	branch = shadowsocks-android
+	url = https://github.com/fuckshadows/libevent.git
+	branch = fuckshadows-android
 [submodule "mobile/src/main/jni/redsocks"]
 	path = mobile/src/main/jni/redsocks
 	url = https://github.com/wongsyrone/redsocks.git

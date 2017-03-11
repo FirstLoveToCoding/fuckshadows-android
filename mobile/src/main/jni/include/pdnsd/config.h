@@ -94,8 +94,8 @@
  * should still be more than sufficient. The use of /dev/random is
  * discouraged, as reading from this device blocks when new random bits
  * need to be gathered. */
-/* #undef RANDOM_DEVICE */
-#define R_DEFAULT 1
+#define RANDOM_DEVICE "/dev/urandom"
+/* #undef R_DEFAULT */
 /* #undef R_RANDOM */
 /* #undef R_ARC4RANDOM */
 /*#define RANDOM_DEVICE "/dev/urandom"*/
@@ -121,7 +121,7 @@
  * Define this to 9 if you want hex dumps of all the queries and replies pdnsd
  * receives (you must also call pdnsd with -v9 to actually see the hex dumps).
  * When in doubt, leave it defined to 1. */
-#define DEBUG 1
+#define DEBUG 0
 
 /* This defines the default verbosity of informational messages you will get.
    This has nothing to to with the debug option (-g), but may be set with -v
@@ -168,7 +168,7 @@
 #define TARGET_CYGWIN 2
 
 /* Assume the Native POSIX Thread Library instead of LinuxThreads ? */
-#define THREADLIB_NPTL 1
+/* #undef THREADLIB_NPTL */
 
 /* If we are using LinuxThreads, implement the fix needed for newer glibcs ? */
 /* #undef THREADLIB_LINUXTHREADS2 */
@@ -219,12 +219,10 @@
 #define HAVE_FCNTL_H 1
 
 /* Define to 1 if you have the `getline' function. */
-#if defined(__aarch64__) || defined(__x86_64__)
 #define HAVE_GETLINE 1
-#endif
 
 /* Define to 1 if you have the `getpwnam_r' function. */
-//#define HAVE_GETPWNAM_R 1
+#define HAVE_GETPWNAM_R 1
 
 /* Define to 1 if you have the `gettimeofday' function. */
 #define HAVE_GETTIMEOFDAY 1
@@ -239,7 +237,7 @@
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the `pthread' library (-lpthread). */
-#define HAVE_LIBPTHREAD 1
+/* #undef HAVE_LIBPTHREAD */
 
 /* Define to 1 if you have the <malloc.h> header file. */
 #define HAVE_MALLOC_H 1
@@ -248,7 +246,7 @@
 #define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the `mempcpy' function. */
-//#define HAVE_MEMPCPY 1
+/* #undef HAVE_MEMPCPY */
 
 /* Define to 1 if you have the `mkfifo' function. */
 #define HAVE_MKFIFO 1
@@ -284,15 +282,10 @@
 #define HAVE_STDLIB_H 1
 
 /* Define to 1 if you have the `stpcpy' function. */
-/* #if defined(__aarch64__) || defined(__x86_64__)
-#define HAVE_STPCPY 1
-#endif */
-
-/* android-21 do have this function on NDK r11c */
 #define HAVE_STPCPY 1
 
 /* Define to 1 if you have the `stpncpy' function. */
-//#define HAVE_STPNCPY 1
+#define HAVE_STPNCPY 1
 
 /* Define to 1 if you have the `strdup' function. */
 #define HAVE_STRDUP 1
@@ -307,7 +300,7 @@
 #define HAVE_STRING_H 1
 
 /* Define to 1 if you have the `strlcpy' function. */
-/* #undef HAVE_STRLCPY */
+#define HAVE_STRLCPY 1
 
 /* Define to 1 if you have the `strndup' function. */
 #define HAVE_STRNDUP 1
@@ -373,7 +366,7 @@
 #define PACKAGE_TARNAME ""
 
 /* Define to the home page for this package. */
-#define PACKAGE_URL ""
+/* #undef PACKAGE_URL */
 
 /* Define to the version of this package. */
 #define PACKAGE_VERSION ""
