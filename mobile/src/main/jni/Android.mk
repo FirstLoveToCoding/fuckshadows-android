@@ -209,7 +209,8 @@ LIBEVENT_SOURCES := \
 	evdns.c					\
 	event_tagging.c				\
 	evrpc.c					\
-	http.c
+	http.c					\
+	epoll_sub.c
 
 LOCAL_MODULE := event
 LOCAL_SRC_FILES := $(addprefix libevent/, $(LIBEVENT_SOURCES))
