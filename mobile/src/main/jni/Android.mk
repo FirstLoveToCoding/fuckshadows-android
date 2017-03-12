@@ -240,16 +240,16 @@ include $(BUILD_STATIC_LIBRARY)
 ## libbloom
 ########################################################
 
-include $(CLEAR_VARS)
-
-BLOOM_SOURCE := bloom.c MurmurHash2.c
-
-LOCAL_MODULE := libbloom
-LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/shadowsocks-libev/src
-
-LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/src/, $(BLOOM_SOURCE))
-
-include $(BUILD_STATIC_LIBRARY)
+#include $(CLEAR_VARS)
+#
+#BLOOM_SOURCE := bloom.c MurmurHash2.c
+#
+#LOCAL_MODULE := libbloom
+#LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/shadowsocks-libev/src
+#
+#LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/src/, $(BLOOM_SOURCE))
+#
+#include $(BUILD_STATIC_LIBRARY)
 
 ########################################################
 ## libipset
@@ -406,7 +406,7 @@ LOCAL_CFLAGS    += -Wall -O2 -fno-strict-aliasing -DMODULE_LOCAL \
 					-I$(LOCAL_PATH)/shadowsocks-libev/libipset/include \
 					-I$(LOCAL_PATH)/libev
 
-LOCAL_STATIC_LIBRARIES := libev libmbedtls libipset libcork libbloom libudns \
+LOCAL_STATIC_LIBRARIES := libev libmbedtls libipset libcork libudns \
 	libsodium libancillary libpcre
 
 LOCAL_LDLIBS := -llog
@@ -441,7 +441,7 @@ LOCAL_CFLAGS    += -Wall -O2 -fno-strict-aliasing -DMODULE_TUNNEL \
 					-I$(LOCAL_PATH)/shadowsocks-libev/libcork/include \
 					-I$(LOCAL_PATH)/include/shadowsocks-libev
 
-LOCAL_STATIC_LIBRARIES := libev libmbedtls libsodium libcork libbloom libudns libancillary
+LOCAL_STATIC_LIBRARIES := libev libmbedtls libsodium libcork libudns libancillary
 
 LOCAL_LDLIBS := -llog
 
