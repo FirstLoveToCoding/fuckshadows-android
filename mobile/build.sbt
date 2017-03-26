@@ -15,11 +15,11 @@ proguardOptions ++=
 
 resConfigs := Seq("ja", "ru", "zh-rCN", "zh-rTW")
 
-val playServicesVersion = "10.2.0"
+val playServicesVersion = "10.2.1"
 resolvers += Resolver.jcenterRepo
 libraryDependencies ++=
   "com.futuremind.recyclerfastscroll" % "fastscroll" % "0.2.5" ::
-  "com.evernote" % "android-job" % "1.1.7" ::
+  "com.evernote" % "android-job" % "1.1.8" ::
   "com.github.jorgecastilloprz" % "fabprogresscircle" % "1.01" ::
   "com.google.android.gms" % "play-services-analytics" % playServicesVersion ::
   "com.google.android.gms" % "play-services-gcm" % playServicesVersion ::
