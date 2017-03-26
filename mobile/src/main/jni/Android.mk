@@ -115,7 +115,7 @@ SODIUM_SOURCE := \
 	crypto_stream/xchacha20/stream_xchacha20.c
 
 LOCAL_MODULE := sodium
-LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/libsodium/src/libsodium/include \
+LOCAL_CFLAGS += -Os -I$(LOCAL_PATH)/libsodium/src/libsodium/include \
 				-I$(LOCAL_PATH)/include \
 				-I$(LOCAL_PATH)/include/sodium \
 				-I$(LOCAL_PATH)/libsodium/src/libsodium/include/sodium \
@@ -155,6 +155,12 @@ LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/libsodium/src/libsodium/include \
 				-DHAVE_NANOSLEEP=1                \
 				-DHAVE_POSIX_MEMALIGN=1           \
 				-DHAVE_GETPID=1
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 
 LOCAL_SRC_FILES := $(addprefix libsodium/src/libsodium/,$(SODIUM_SOURCE))
 
@@ -197,10 +203,17 @@ LIBEVENT_SOURCES := \
 
 LOCAL_MODULE := event
 LOCAL_SRC_FILES := $(addprefix libevent/, $(LIBEVENT_SOURCES))
-LOCAL_CFLAGS += -O2 \
+LOCAL_CFLAGS += -Os \
 	-I$(LOCAL_PATH)/libevent/compat \
 	-I$(LOCAL_PATH)/libevent/include \
-	-I$(LOCAL_PATH)/libevent \
+	-I$(LOCAL_PATH)/libevent
+
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -213,7 +226,7 @@ include $(CLEAR_VARS)
 ANCILLARY_SOURCE := fd_recv.c fd_send.c
 
 LOCAL_MODULE := libancillary
-LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/libancillary
+LOCAL_CFLAGS += -Os -I$(LOCAL_PATH)/libancillary
 
 LOCAL_SRC_FILES := $(addprefix libancillary/, $(ANCILLARY_SOURCE))
 
@@ -228,7 +241,7 @@ include $(BUILD_STATIC_LIBRARY)
 #BLOOM_SOURCE := bloom.c MurmurHash2.c
 #
 #LOCAL_MODULE := libbloom
-#LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/shadowsocks-libev/src
+#LOCAL_CFLAGS += -Os -I$(LOCAL_PATH)/shadowsocks-libev/src
 #
 #LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/src/, $(BLOOM_SOURCE))
 #
@@ -250,8 +263,15 @@ set_src = set/allocation.c set/inspection.c set/ipv4_set.c set/ipv6_set.c \
 IPSET_SOURCE := general.c $(bdd_src) $(map_src) $(set_src)
 
 LOCAL_MODULE := libipset
-LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/shadowsocks-libev/libipset/include \
+LOCAL_CFLAGS += -Os -I$(LOCAL_PATH)/shadowsocks-libev/libipset/include \
 				-I$(LOCAL_PATH)/shadowsocks-libev/libcork/include
+
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 
 LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/libipset/,$(IPSET_SOURCE))
 
@@ -277,8 +297,15 @@ pthreads_src := pthreads/thread.c
 CORK_SOURCE := $(cli_src) $(core_src) $(ds_src) $(posix_src) $(pthreads_src)
 
 LOCAL_MODULE := libcork
-LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/shadowsocks-libev/libcork/include \
+LOCAL_CFLAGS += -Os -I$(LOCAL_PATH)/shadowsocks-libev/libcork/include \
 				-DCORK_API=CORK_LOCAL
+
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 
 LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/libcork/,$(CORK_SOURCE))
 
@@ -296,10 +323,17 @@ UDNS_SOURCES := udns_dn.c udns_dntosp.c udns_parse.c udns_resolver.c udns_init.c
 	udns_rr_srv.c udns_rr_naptr.c udns_codes.c udns_jran.c
 
 LOCAL_MODULE := libudns
-LOCAL_CFLAGS += -O2 -I$(LOCAL_PATH)/libudns \
+LOCAL_CFLAGS += -Os -I$(LOCAL_PATH)/libudns \
 				-DHAVE_DECL_INET_NTOP
 
 LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/libudns/,$(UDNS_SOURCES))
+
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -310,12 +344,17 @@ include $(BUILD_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libev
-LOCAL_CFLAGS += -O2 -DNDEBUG -DHAVE_CONFIG_H \
+LOCAL_CFLAGS += -Os -DNDEBUG -DHAVE_CONFIG_H \
 				-I$(LOCAL_PATH)/include/libev
 LOCAL_SRC_FILES := \
 	shadowsocks-libev/libev/ev.c \
 	shadowsocks-libev/libev/event.c
-
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 include $(BUILD_STATIC_LIBRARY)
 
 ########################################################
@@ -333,11 +372,16 @@ LOCAL_STATIC_LIBRARIES := libevent
 
 LOCAL_MODULE := redsocks
 LOCAL_SRC_FILES := $(addprefix redsocks/, $(REDSOCKS_SOURCES)) 
-LOCAL_CFLAGS += -O2 -std=gnu99 -DUSE_IPTABLES \
+LOCAL_CFLAGS += -Os -std=gnu99 -DUSE_IPTABLES \
 	-I$(LOCAL_PATH)/redsocks \
 	-I$(LOCAL_PATH)/libevent/include \
 	-I$(LOCAL_PATH)/libevent
-
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 include $(BUILD_SHARED_EXECUTABLE)
 
 ########################################################
@@ -350,9 +394,15 @@ PDNSD_SOURCES  := $(wildcard $(LOCAL_PATH)/pdnsd/src/*.c)
 
 LOCAL_MODULE    := pdnsd
 LOCAL_SRC_FILES := $(PDNSD_SOURCES:$(LOCAL_PATH)/%=%)
-LOCAL_CFLAGS    += -DANDROID -Wall -O2 -I$(LOCAL_PATH)/pdnsd \
+LOCAL_CFLAGS    += -DANDROID -Wall -Os -I$(LOCAL_PATH)/pdnsd \
 				   -I$(LOCAL_PATH)/include/pdnsd -I$(LOCAL_PATH)/libancillary
 LOCAL_CFLAGS += -Wno-parentheses -Wno-gnu-designator
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 LOCAL_STATIC_LIBRARIES := libancillary
 LOCAL_LDLIBS := -llog
 
@@ -373,7 +423,7 @@ SHADOWSOCKS_SOURCES := local.c \
 
 LOCAL_MODULE    := ss-local
 LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/src/, $(SHADOWSOCKS_SOURCES))
-LOCAL_CFLAGS    += -Wall -O2 -fno-strict-aliasing -DMODULE_LOCAL \
+LOCAL_CFLAGS    += -Wall -Os -fno-strict-aliasing -DMODULE_LOCAL \
 					-DUSE_CRYPTO_MBEDTLS -DANDROID -DHAVE_CONFIG_H \
 					-DCONNECT_IN_PROGRESS=EINPROGRESS \
 					-DHAVE_POSIX_MEMALIGN=1 \
@@ -389,7 +439,12 @@ LOCAL_CFLAGS    += -Wall -O2 -fno-strict-aliasing -DMODULE_LOCAL \
 					-I$(LOCAL_PATH)/shadowsocks-libev/libcork/include \
 					-I$(LOCAL_PATH)/shadowsocks-libev/libipset/include \
 					-I$(LOCAL_PATH)/libev
-
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 LOCAL_STATIC_LIBRARIES := libev libmbedtls libipset libcork libudns \
 	libsodium libancillary libpcre
 
@@ -411,7 +466,7 @@ SHADOWSOCKS_SOURCES := tunnel.c \
 
 LOCAL_MODULE    := ss-tunnel
 LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/src/, $(SHADOWSOCKS_SOURCES))
-LOCAL_CFLAGS    += -Wall -O2 -fno-strict-aliasing -DMODULE_TUNNEL \
+LOCAL_CFLAGS    += -Wall -Os -fno-strict-aliasing -DMODULE_TUNNEL \
 					-DUSE_CRYPTO_MBEDTLS -DANDROID -DHAVE_CONFIG_H -DSSTUNNEL_JNI \
 					-DCONNECT_IN_PROGRESS=EINPROGRESS \
 					-DHAVE_POSIX_MEMALIGN=1 \
@@ -425,7 +480,12 @@ LOCAL_CFLAGS    += -Wall -O2 -fno-strict-aliasing -DMODULE_TUNNEL \
 					-I$(LOCAL_PATH)/libev \
 					-I$(LOCAL_PATH)/shadowsocks-libev/libcork/include \
 					-I$(LOCAL_PATH)/include/shadowsocks-libev
-
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 LOCAL_STATIC_LIBRARIES := libev libmbedtls libsodium libcork libudns libancillary
 
 LOCAL_LDLIBS := -llog
@@ -463,7 +523,12 @@ LOCAL_CFLAGS += -DBADVPN_LITTLE_ENDIAN -DBADVPN_THREAD_SAFE
 LOCAL_CFLAGS += -DNDEBUG -DANDROID
 LOCAL_CFLAGS += -Wno-parentheses -Wno-gnu-designator
 # LOCAL_CFLAGS += -DTUN2SOCKS_JNI
-
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 LOCAL_STATIC_LIBRARIES := libancillary
 
 LOCAL_C_INCLUDES:= \
@@ -557,7 +622,12 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/mbedtls/include
 MBEDTLS_SOURCES := $(wildcard $(LOCAL_PATH)/mbedtls/library/*.c)
 
 LOCAL_SRC_FILES := $(MBEDTLS_SOURCES:$(LOCAL_PATH)/%=%)
-
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 include $(BUILD_STATIC_LIBRARY)
 
 ########################################################
@@ -594,7 +664,12 @@ libpcre_src_files := \
     dist/pcre_valid_utf8.c \
     dist/pcre_version.c \
     dist/pcre_xclass.c
-
+# No need to add '-Wl,' prefix to LDFLAGS
+# Gold does not support mips or mips64, but gold is needed for LTO with Clang.
+ifeq (,$(filter $(TARGET_ARCH_ABI),mips mips64 x86))
+    LOCAL_CFLAGS += -flto
+    LOCAL_LDFLAGS := -flto -fuse-ld=gold
+endif
 LOCAL_SRC_FILES := $(addprefix pcre/, $(libpcre_src_files))
 
 include $(BUILD_STATIC_LIBRARY)
