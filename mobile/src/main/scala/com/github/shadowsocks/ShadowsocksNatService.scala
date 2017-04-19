@@ -215,7 +215,7 @@ class ShadowsocksNatService extends BaseService {
       AclSyncJob.schedule(profile.route)
 
     changeState(State.CONNECTED)
-    notification = new ShadowsocksNotification(this, profile.getName, true)
+    notification = new ShadowsocksNotification(this, profile.name, true)
   }
 
   override def stopRunner(stopService: Boolean, msg: String = null) {
