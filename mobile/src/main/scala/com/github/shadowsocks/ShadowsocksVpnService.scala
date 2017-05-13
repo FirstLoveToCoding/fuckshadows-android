@@ -193,15 +193,15 @@ class ShadowsocksVpnService extends VpnService with BaseService {
     IOUtils.writeString(new File(getFilesDir, "pdnsd-vpn.conf"), profile.route match {
       case Acl.BYPASS_CHN | Acl.BYPASS_LAN_CHN | Acl.GFWLIST | Acl.CUSTOM_RULES =>
         ConfigUtils.PDNSD_DIRECT.formatLocal(Locale.ENGLISH, "protect = \"protect_path\";", getCacheDir.getAbsolutePath,
-          "0.0.0.0", profile.localPort + 53, "114.114.114.114, 223.5.5.5, 1.2.4.8",
+          "127.0.0.1", profile.localPort + 53, "114.114.114.114, 223.5.5.5, 1.2.4.8",
           getBlackList, reject, profile.localPort + 63, reject)
       case Acl.CHINALIST =>
         ConfigUtils.PDNSD_DIRECT.formatLocal(Locale.ENGLISH, "protect = \"protect_path\";", getCacheDir.getAbsolutePath,
-          "0.0.0.0", profile.localPort + 53, "8.8.8.8, 8.8.4.4, 208.67.222.222",
+          "127.0.0.1", profile.localPort + 53, "8.8.8.8, 8.8.4.4, 208.67.222.222",
           "", reject, profile.localPort + 63, reject)
       case _ =>
         ConfigUtils.PDNSD_LOCAL.formatLocal(Locale.ENGLISH, "protect = \"protect_path\";", getCacheDir.getAbsolutePath,
-          "0.0.0.0", profile.localPort + 53, profile.localPort + 63, reject)
+          "127.0.0.1", profile.localPort + 53, profile.localPort + 63, reject)
     })
     val cmd = Array(getApplicationInfo.nativeLibraryDir + "/libpdnsd.so", "-c", "pdnsd-vpn.conf")
 
@@ -273,7 +273,7 @@ class ShadowsocksVpnService extends VpnService with BaseService {
     cmd += "--enable-udprelay"
 
     if (!profile.udpdns)
-      cmd += ("--dnsgw", "%s:%d".formatLocal(Locale.ENGLISH, PRIVATE_VLAN.formatLocal(Locale.ENGLISH, "1"),
+      cmd += ("--dnsgw", "%s:%d".formatLocal(Locale.ENGLISH, "127.0.0.1",
         profile.localPort + 53))
 
     tun2socksProcess = new GuardedProcess(cmd: _*).start(() => sendFd(fd))
