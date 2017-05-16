@@ -8,6 +8,7 @@ versionCode := Some(181)
 proguardOptions ++=
   "-dontwarn com.google.android.gms.internal.**" ::
   "-dontwarn com.j256.ormlite.**" ::
+  "-dontwarn okhttp3.**" ::
   "-dontwarn okio.**" ::
   "-dontwarn org.xbill.**" ::
   "-keep class com.github.shadowsocks.JniHelper { *; }" ::
@@ -29,7 +30,7 @@ libraryDependencies ++=
   "com.mikepenz" % "iconics-core" % "2.8.4" ::
   "com.mikepenz" % "materialdrawer" % "5.9.1" ::
   "com.mikepenz" % "materialize" % "1.0.1" ::
-  "com.squareup.okhttp3" % "okhttp" % "3.7.0" ::
+  "com.squareup.okhttp3" % "okhttp" % "3.8.0" ::
   "com.twofortyfouram" % "android-plugin-api-for-locale" % "1.0.2" ::
   "dnsjava" % "dnsjava" % "2.1.8" ::
   "eu.chainfire" % "libsuperuser" % "1.0.0.201704021214" ::
