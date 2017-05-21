@@ -16,7 +16,7 @@ proguardOptions ++=
 
 resConfigs := Seq("ja", "ru", "zh-rCN", "zh-rTW")
 
-val playServicesVersion = "10.2.4"
+val playServicesVersion = "10.2.6"
 resolvers += Resolver.jcenterRepo
 libraryDependencies ++=
   "com.futuremind.recyclerfastscroll" % "fastscroll" % "0.2.5" ::
@@ -36,3 +36,10 @@ libraryDependencies ++=
   "eu.chainfire" % "libsuperuser" % "1.0.0.201704021214" ::
   "net.glxn.qrgen" % "android" % "2.0" ::
   Nil
+
+packagingOptions := PackagingOptions(excludes =
+  "META-INF/maven/com.squareup.okio/okio/pom.properties" ::
+  "META-INF/maven/com.squareup.okio/okio/pom.xml" ::
+  "META-INF/maven/com.squareup.okhttp3/okhttp/pom.properties" ::
+  "META-INF/maven/com.squareup.okhttp3/okhttp/pom.xml" ::
+  Nil)
