@@ -3,7 +3,7 @@ jdk:
 - oraclejdk8
 env:
   global:
-  - NDK_VERSION=r14b
+  - NDK_VERSION=r15
   - NDK_CCACHE=ccache
   - ANDROID_NDK_HOME=$HOME/.android/android-ndk-${NDK_VERSION}
   - SBTPATH=$HOME/.sbt
