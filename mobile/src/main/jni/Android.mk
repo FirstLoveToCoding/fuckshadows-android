@@ -418,7 +418,7 @@ SHADOWSOCKS_SOURCES := local.c \
 	cache.c udprelay.c utils.c netutils.c json.c jconf.c \
 	acl.c http.c tls.c rule.c \
 	crypto.c aead.c stream.c \
-	ppbloom.c \
+	sbf.c \
 	android.c
 
 LOCAL_MODULE    := ss-local
@@ -461,7 +461,7 @@ include $(CLEAR_VARS)
 SHADOWSOCKS_SOURCES := tunnel.c \
 	cache.c udprelay.c utils.c netutils.c json.c jconf.c \
 	crypto.c aead.c stream.c \
-	ppbloom.c \
+	sbf.c \
 	android.c
 
 LOCAL_MODULE    := ss-tunnel
