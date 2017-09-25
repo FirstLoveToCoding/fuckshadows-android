@@ -62,17 +62,14 @@ SODIUM_SOURCE := \
 	crypto_pwhash/argon2/argon2.c \
 	crypto_pwhash/argon2/blake2b-long.c \
 	crypto_pwhash/argon2/pwhash_argon2i.c \
+	crypto_pwhash/argon2/pwhash_argon2id.c \
 	crypto_pwhash/crypto_pwhash.c \
-	crypto_pwhash/scryptsalsa208sha256/crypto_scrypt-common.c \
-	crypto_pwhash/scryptsalsa208sha256/scrypt_platform.c \
-	crypto_pwhash/scryptsalsa208sha256/pbkdf2-sha256.c \
-	crypto_pwhash/scryptsalsa208sha256/pwhash_scryptsalsa208sha256.c \
-	crypto_pwhash/scryptsalsa208sha256/nosse/pwhash_scryptsalsa208sha256_nosse.c \
 	crypto_scalarmult/crypto_scalarmult.c \
 	crypto_scalarmult/curve25519/scalarmult_curve25519.c \
 	crypto_secretbox/crypto_secretbox.c \
 	crypto_secretbox/crypto_secretbox_easy.c \
 	crypto_secretbox/xsalsa20poly1305/secretbox_xsalsa20poly1305.c \
+	crypto_secretstream/xchacha20poly1305/secretstream_xchacha20poly1305.c \
 	crypto_shorthash/crypto_shorthash.c \
 	crypto_shorthash/siphash24/shorthash_siphash24.c \
 	crypto_shorthash/siphash24/ref/shorthash_siphash24_ref.c \
@@ -88,6 +85,7 @@ SODIUM_SOURCE := \
 	crypto_stream/xsalsa20/stream_xsalsa20.c \
 	crypto_verify/sodium/verify.c \
 	randombytes/randombytes.c \
+	sodium/codecs.c \
 	sodium/core.c \
 	sodium/runtime.c \
 	sodium/utils.c \
@@ -97,6 +95,12 @@ SODIUM_SOURCE := \
 	crypto_scalarmult/curve25519/ref10/x25519_ref10.c \
 	crypto_stream/salsa20/ref/salsa20_ref.c \
 	crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305.c \
+	crypto_box/curve25519xchacha20poly1305/box_seal_curve25519xchacha20poly1305.c \
+	crypto_pwhash/scryptsalsa208sha256/crypto_scrypt-common.c \
+	crypto_pwhash/scryptsalsa208sha256/scrypt_platform.c \
+	crypto_pwhash/scryptsalsa208sha256/pbkdf2-sha256.c \
+	crypto_pwhash/scryptsalsa208sha256/pwhash_scryptsalsa208sha256.c \
+	crypto_pwhash/scryptsalsa208sha256/nosse/pwhash_scryptsalsa208sha256_nosse.c \
 	crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305.c \
 	crypto_shorthash/siphash24/shorthash_siphashx24.c \
 	crypto_shorthash/siphash24/ref/shorthash_siphashx24_ref.c \
@@ -369,7 +373,7 @@ LOCAL_SRC_FILES := $(addprefix shadowsocks-libev/libcares/,$(CARES_SOURCES))
 include $(BUILD_STATIC_LIBRARY)
 
 ########################################################
-## libev 
+## libev
 ########################################################
 
 include $(CLEAR_VARS)
