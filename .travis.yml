@@ -45,7 +45,7 @@ install:
   fi
 - cp -f mobile/local.properties.wongsyrone mobile/local.properties
 script:
-- "$SBTPATH/sbt go-clean clean go-build android:package-release"
+- "$SBTPATH/sbt go-clean clean clean-files go-build android:package-release"
 deploy:
   provider: releases
   api_key:
