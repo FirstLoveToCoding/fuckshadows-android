@@ -54,7 +54,7 @@ class AclSyncJob(private val route: String) : Job() {
     }
 
     override fun onRunJob(params: Params): Result = try {
-        val acl = URL("https://shadowsocks.org/acl/android/v1/$route.acl").openStream().bufferedReader()
+        val acl = URL("https://raw.githubusercontent.com/fuckshadows/fuckshadows-android/master/mobile/src/main/assets/acl/$route.acl").openStream().bufferedReader()
                 .use { it.readText() }
         Acl.getFile(route).printWriter().use { it.write(acl) }
         Result.SUCCESS
