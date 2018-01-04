@@ -9,7 +9,7 @@ release/
 .idea/
 *.iml
 
-core/src/overture/.deps
+core/src/overture/dependencies
 core/src/overture/bin
 core/src/overture/pkg
 

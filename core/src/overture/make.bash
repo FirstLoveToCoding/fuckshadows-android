@@ -9,7 +9,7 @@ function try () {
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 MIN_API=$1
 TARGET=$DIR/bin
-DEPS=$DIR/.deps
+DEPS=$DIR/dependencies
 
 ANDROID_ARM_TOOLCHAIN=$DEPS/android-toolchain-${MIN_API}-arm
 ANDROID_ARM64_TOOLCHAIN=$DEPS/android-toolchain-${MIN_API}-arm64
@@ -62,7 +62,7 @@ if [ ! -f "$TARGET/armeabi-v7a/liboverture.so" ] || [ ! -f "$TARGET/arm64-v8a/li
     echo "Get dependences for overture"
     go get -u github.com/tools/godep
 
-    pushd $GOPATH/src/github.com/shadowsocks/overture/main
+    pushd $GOPATH/src/github.com/fuckshadows/overture/main
     godep restore
 
     echo "Cross compile overture for arm"
