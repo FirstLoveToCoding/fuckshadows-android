@@ -60,10 +60,11 @@ if [ ! -f "$TARGET/armeabi-v7a/liboverture.so" ] || [ ! -f "$TARGET/arm64-v8a/li
    [ ! -f "$TARGET/x86/liboverture.so" ]; then
 
     echo "Get dependences for overture"
-    go get -u github.com/tools/godep
+    #go get -u github.com/tools/godep
 
     pushd $GOPATH/src/github.com/fuckshadows/overture/main
-    godep restore
+    #godep restore
+    go get
 
     echo "Cross compile overture for arm"
     if [ ! -f "$TARGET/armeabi-v7a/liboverture.so" ]; then
