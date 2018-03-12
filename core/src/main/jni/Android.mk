@@ -574,6 +574,7 @@ TUN2SOCKS_SOURCES := \
 	lwip/src/core/stats.c \
 	lwip/src/core/sys.c \
 	lwip/src/core/altcp.c \
+	lwip/src/core/altcp_alloc.c \
 	lwip/src/core/altcp_tcp.c \
 	lwip/src/core/tcp.c \
 	lwip/src/core/tcp_in.c \
